@@ -18,7 +18,7 @@ my_headers = ['date', 'open', 'high', 'low', 'close','adj close','volume']
 my_dtypes = {'date': 'str', 'open': 'float', 'high': 'float', 'low': 'float',
              'close': 'float', 'volume': 'int'}
 my_parse_dates = ['date']
-name = 'TSLA'
+name = 'AAPL_test'
 loaded_data = pd.read_csv('Data/' + name+ '.csv', sep=',', header=1, names=my_headers,
                           dtype=my_dtypes, parse_dates=my_parse_dates)
 
@@ -44,17 +44,22 @@ for i in range(0,len(quotes) - chunk,1):
     ax1.xaxis.set_visible(False)
     ax1.yaxis.set_visible(False)
     ax1.axis('off')
-    sum = 0
-    # sum = sum + quotes[i + chunk + 30][4]
-    # sum = sum / 10
-    # if (sum   >= quotes[i + chunk - 1][4] * 1.20):
-    #     plt.savefig('File3/1/' + name +'-PIC' + str(i) + '.png',pad_inches = 0,Transparent = 'False')
-    # elif (sum * 1.20< quotes[i + chunk - 1][4] ):
-    #     plt.savefig('File3/0/' + name +'-PIC' + str(i) + '.png',pad_inches = 0,Transparent = 'False')
-    if (quotes[i ][4] < quotes[i + chunk][4]):
-        plt.savefig('File3/1/' + name +'-PIC' + str(i) + '.png',pad_inches = 0,Transparent = 'False')
-    else :
-        plt.savefig('File3/0/' + name +'-PIC' + str(i) + '.png',pad_inches = 0,Transparent = 'False')
-    # else :
-    #     plt.savefig('File3/0/' + name +'-PIC' + str(i) + '.png',pad_inches = 0,Transparent = 'False')
+    # if (quotes[i+2*chunk-1][4]   >= quotes[i + chunk - 1][4] * 1.15):
+    #     plt.savefig('N_train/0/' + name +'-PIC' + str(i) + '.png',pad_inches = 0,Transparent = 'False')
+    # elif (quotes[i+2*chunk-1][4]   < quotes[i + chunk - 1][4] * 1.15 and quotes[i+2*chunk-1][4] >= quotes[i + chunk - 1][4]):
+    #     plt.savefig('N_train/1/' + name +'-PIC' + str(i) + '.png',pad_inches = 0,Transparent = 'False')
+    # elif (quotes[i + 2 * chunk - 1][4] > quotes[i + chunk - 1][4] * 0.85 and quotes[i + 2 * chunk - 1][4] <
+    #           quotes[i + chunk - 1][4]):
+    #     plt.savefig('N_train/2/' + name + '-PIC' + str(i) + '.png', pad_inches=0, Transparent='False')
+    # else:
+    #     plt.savefig('N_train/3/' + name + '-PIC' + str(i) + '.png', pad_inches=0, Transparent='False')
+    if (quotes[i+chunk-1][4] < quotes[i + 2*chunk-1][4]):
+        plt.savefig('N_test/1/' + name +'-PIC' + str(i) + '.png',pad_inches = 0,Transparent = 'False')
+    else:
+        plt.savefig('N_test/0/' + name + '-PIC' + str(i) + '.png', pad_inches=0, Transparent='False')
+
+    # if (quotes[i][4] < quotes[i + chunk][4]):
+    #     plt.savefig('Test/1/' + name +'-PIC' + str(i) + '.png',pad_inches = 0,Transparent = 'False')
+    # else:
+    #     plt.savefig('Test/0/' + name + '-PIC' + str(i) + '.png', pad_inches=0, Transparent='False')
     plt.close(fig)
