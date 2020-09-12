@@ -13,11 +13,11 @@ from keras.models import Model
 from keras.optimizers import Adam
 from sklearn.metrics import confusion_matrix,plot_confusion_matrix
 
-base_model=MobileNetV2(weights='imagenet',include_top=False) #imports the mobilenet model and discards the last 1000 neuron layer.
+base_model=MobileNetV2(weights='imagenet',include_top=False)
 
 x=base_model.output
 x=GlobalAveragePooling2D()(x)
-x=Dense(1024,activation='relu')(x) #we add dense layers so that the model can learn more complex functions and classify for better results.
+x=Dense(1024,activation='relu')(x)
 x=Dense(1024,activation='relu')(x) #dense layer 2
 x=Dense(512,activation='relu')(x) #dense layer 3
 preds=Dense(2,activation='softmax')(x)

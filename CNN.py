@@ -36,7 +36,7 @@ model.add(Dense(256))
 model.add(Dropout(0.25))
 model.add(Activation('relu'))
 model.add(Dropout(0.5))
-model.add(Dense(2))
+model.add(Dense(3))
 model.add(Activation('softmax'))
 train_datagen=ImageDataGenerator(preprocessing_function=preprocess_input) #included in our dependencies
 test_datagen = ImageDataGenerator(preprocessing_function=preprocess_input)
@@ -62,7 +62,7 @@ step_size_val=validation_generator.n//validation_generator.batch_size
 model.fit_generator(generator=train_generator,
                    steps_per_epoch=step_size_train, validation_data=validation_generator,
                     validation_steps=step_size_val,
-                   epochs=20)
+                   epochs=7)
 
 Y_pred = model.predict_generator(validation_generator, validation_generator.n // validation_generator.batch_size + 1)
 y_pred = np.argmax(Y_pred, axis=1)

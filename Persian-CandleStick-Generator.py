@@ -14,21 +14,19 @@ register_matplotlib_converters()
 
 # Load data from CSV file.
 ##########################
-my_headers = ['date', 'open', 'high', 'low', 'close','adj close','volume']
-my_dtypes = {'date': 'str', 'open': 'float', 'high': 'float', 'low': 'float',
-             'close': 'float', 'volume': 'int'}
-my_parse_dates = ['date']
-name = 'AAPL_test'
+my_headers = [ 'PDate','PriceFirst', 'PriceMax', 'PriceMin', 'ClosePrice']
+my_dtypes = {'PriceFirst': 'float', 'PriceMax': 'float', 'PriceMin': 'float',
+             'ClosePrice': 'float'}
+name = 'wabmelat_test'
 loaded_data = pd.read_csv('Data/' + name+ '.csv', sep=',', header=1, names=my_headers,
-                          dtype=my_dtypes, parse_dates=my_parse_dates)
-
+                          dtype=my_dtypes)
+loaded_data = loaded_data.iloc[::-1]
 # Convert 'Timestamp' to 'float'.
 #   candlestick_ohlc needs time to be in float days format - see date2num().
-loaded_data['date'] = [mdates.date2num(d) for d in loaded_data['date']]
 
 # Re-arrange data so that each row contains values of a day: 'date','open','high','low','close'.
 y_label = []
-quotes = [tuple(x) for x in loaded_data[['date', 'open', 'high', 'low', 'close']].values]
+quotes = [tuple(x) for x in loaded_data[[ 'PDate','PriceFirst', 'PriceMax', 'PriceMin', 'ClosePrice']].values]
 chunk = 20
 dimension = 50
 for i in range(0,len(quotes) - chunk,1):
@@ -53,32 +51,13 @@ for i in range(0,len(quotes) - chunk,1):
     #     plt.savefig('N_test/2/' + name + '-PIC' + str(i) + '.png', pad_inches=0, Transparent='False')
     # else:
     #     plt.savefig('N_test/3/' + name + '-PIC' + str(i) + '.png', pad_inches=0, Transparent='False')
-    # if (quotes[i+chunk-1][4] < quotes[i + chunk ][4]):
+    # if (quotes[i+chunk-1][4] < quotes[i + chunk-1 + 7][4]):
     #     plt.savefig('N_test/1/' + name +'-PIC' + str(i) + '.png',pad_inches = 0,Transparent = 'False')
     # else:
     #     plt.savefig('N_test/0/' + name + '-PIC' + str(i) + '.png', pad_inches=0, Transparent='False')
-    first = quotes [i ][4]
-    flag = 0
-    min = 100000000
-    max = 0
-    for k in range(i, i + chunk):
-        if (quotes[k][3] < min):
-            min = quotes[k][3]
-        if (quotes[k][2] > max):
-            max = quotes[k][2]
-    for k in range(i + chunk,i + 2*chunk):
-        if (max < quotes[k][4] and quotes[k][1] < quotes[k][4]):
-            plt.savefig('N_test/2/' + name + '-PIC' + str(i) + '.png', pad_inches=0, Transparent='False')
-            flag = 1
-            break
-        elif((min > quotes[k][4] and quotes[k][1] > quotes[k][4])):
-            plt.savefig('N_test/1/' + name + '-PIC' + str(i) + '.png', pad_inches=0, Transparent='False')
-            flag = 1
-            break
-    if (flag == 0):
-        plt.savefig('N_test/0/' + name + '-PIC' + str(i) + '.png', pad_inches=0, Transparent='False')
-    # if (quotes[i][4] < quotes[i + chunk][4]):
-    #     plt.savefig('File3/1/' + name +'-PIC' + str(i) + '.png',pad_inches = 0,Transparent = 'False')
-    # else:
-    #     plt.savefig('File3/0/' + name + '-PIC' + str(i) + '.png', pad_inches=0, Transparent='False')
+
+    if (quotes[i][4] < quotes[i + chunk][4]):
+        plt.savefig('Per_test/1/' + name +'-PIC' + str(i) + '.png',pad_inches = 0,Transparent = 'False')
+    else:
+        plt.savefig('Per_test/0/' + name + '-PIC' + str(i) + '.png', pad_inches=0, Transparent='False')
     plt.close(fig)
