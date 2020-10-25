@@ -2,7 +2,7 @@
 Predicting next day of market by representing 1 for a rise and 0 for a fall.\
 This model however compares price to first price of window which makes it rarely usable for traders.\
 This model tests both persian and american stock markets.\
-full implementation can be seen in [1] mentioned on the bottom of page.
+Full implementation can be seen in [1] mentioned on the bottom of page.
 
 ## Refrence
 [1]R. M. I. Kusuma, T.-T. Ho, W.-C. Kao, Y.-Y. Ou, and K.-L. Hua,
